@@ -1,0 +1,13 @@
+competition c_0003 u_012 cp_00004 Stacks&Queues Hard cs_00003 Failed Rust 1994 46
+problem u_019 p_00006 DP Hard s_00005 Passed C 1408
+problem u_016 p_00008 Trees Hard s_00003 Failed Java 1443
+problem u_009 p_00015 Graphs Hard s_00004 Passed Go 120
+solution u_019 p_00006 s_00005 511
+problem u_017 p_00009 Heaps Hard s_00002 Failed Go 821
+solution u_009 p_00015 s_00004 180
+competition c_0003 u_018 cp_00008 Heaps Easy cs_00005 Passed Go 411 7
+competition c_0001 u_005 cp_00004 Stacks&Queues Hard cs_00004 Passed Ruby 756 25
+competition c_0002 u_002 cp_00010 Greedy Hard cs_00001 TLE Python 2440 32
+competition c_0002 u_003 cp_00010 Greedy Hard cs_00002 TLE Python 2076 18
+problem u_020 p_00016 Stacks&Queues Easy s_00001 TLE C++ 2805
+EOF
