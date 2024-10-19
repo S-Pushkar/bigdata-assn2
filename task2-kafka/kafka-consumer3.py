@@ -3,6 +3,7 @@
 from kafka import KafkaConsumer
 import json
 import sys
+import math
 
 topic = sys.argv[3]
 
@@ -91,6 +92,6 @@ output['best_contributor'] = sorted(output['best_contributor'])
 output['user_elo_rating'] = dict(sorted(user_elo_ratings.items(), key=lambda x: x[0]))
 
 for user_id, elo_rating in output['user_elo_rating'].items():
-    output['user_elo_rating'][user_id] = round(elo_rating)
+    output['user_elo_rating'][user_id] = math.floor(elo_rating)
 
 print(json.dumps(output, indent=4))

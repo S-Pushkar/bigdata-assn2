@@ -3,6 +3,7 @@
 from kafka import KafkaConsumer
 import json
 import sys
+import math
 
 topic = sys.argv[2]
 
@@ -24,8 +25,8 @@ for message in consumer:
     com_submission_id = data[6]
     status = data[7]
     language = data[8]
-    runtime = data[9]
-    time_taken = data[10]
+    runtime = int(data[9])
+    time_taken = int(data[10])
 
     if competition_id not in competitions:
         competitions[competition_id] = {}
@@ -60,6 +61,6 @@ competitions = dict(sorted(competitions.items(), key=lambda x: x[0]))
 for competition_id in competitions:
     competitions[competition_id] = dict(sorted(competitions[competition_id].items(), key=lambda x: x[0]))
     for user_id in competitions[competition_id]:
-        competitions[competition_id][user_id] = round(competitions[competition_id][user_id])
+        competitions[competition_id][user_id] = math.floor(competitions[competition_id][user_id])
 
 print(json.dumps(competitions, indent=4))
