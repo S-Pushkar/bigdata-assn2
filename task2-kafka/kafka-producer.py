@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import kafka
+from kafka import KafkaProducer
 import sys
 import json
 
-producer = kafka.KafkaProducer(bootstrap_servers='localhost:9092')
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
 consumer1_topic = sys.argv[1]
 
