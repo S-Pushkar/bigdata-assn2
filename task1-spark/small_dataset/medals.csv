@@ -1,0 +1,67 @@
+id,sport,event,year,country,medal
+1,archery,men's individual,2012,london,gold
+2,archery,men's individual,2012,london,silver
+3,archery,men's individual,2012,london,bronze
+15,boxing,women's flyweight,2012,london,gold
+16,boxing,women's flyweight,2012,london,silver
+17,boxing,women's flyweight,2012,london,bronze
+18,boxing,women's flyweight,2012,london,bronze
+25,cycling,men's roadrace,2012,london,gold
+26,cycling,men's roadrace,2012,london,silver
+27,cycling,men's roadrace,2012,london,bronze
+9,athletics,decathlon,2012,london,gold
+10,athletics,decathlon,2012,london,silver
+11,athletics,decathlon,2012,london,bronze
+34,fencing,individual epee,2012,london,gold
+35,fencing,individual epee,2012,london,silver
+36,fencing,individual epee,2012,london,bronze
+42,gymnastics,individual all around,2012,london,gold
+43,gymnastics,individual all around,2012,london,silver
+44,gymnastics,individual all around,2012,london,bronze
+50,shooting,10m air rifle,2012,london,gold
+51,shooting,10m air rifle,2012,london,silver
+52,shooting,10m air rifle,2012,london,bronze
+4,archery,men's individual,2016,brazil,gold
+5,archery,men's individual,2016,brazil,silver
+6,archery,men's individual,2016,brazil,bronze
+15,boxing,women's flyweight,2016,brazil,gold
+19,boxing,women's flyweight,2016,brazil,silver
+16,boxing,women's flyweight,2016,brazil,bronze
+20,boxing,women's flyweight,2016,brazil,bronze
+28,cycling,men's roadrace,2016,brazil,gold
+29,cycling,men's roadrace,2016,brazil,silver
+30,cycling,men's roadrace,2016,brazil,bronze
+9,athletics,decathlon,2016,brazil,gold
+12,athletics,decathlon,2016,brazil,silver
+13,athletics,decathlon,2016,brazil,bronze
+37,fencing,individual epee,2016,brazil,gold
+38,fencing,individual epee,2016,brazil,silver
+39,fencing,individual epee,2016,brazil,bronze
+45,gymnastics,individual all around,2016,brazil,gold
+46,gymnastics,individual all around,2016,brazil,silver
+44,gymnastics,individual all around,2016,brazil,bronze
+53,shooting,10m air rifle,2016,brazil,gold
+54,shooting,10m air rifle,2016,brazil,silver
+55,shooting,10m air rifle,2016,brazil,bronze
+7,archery,men's individual,2020,japan,gold
+8,archery,men's individual,2020,japan,silver
+2,archery,men's individual,2020,japan,bronze
+21,boxing,women's flyweight,2020,japan,gold
+22,boxing,women's flyweight,2020,japan,silver
+23,boxing,women's flyweight,2020,japan,bronze
+24,boxing,women's flyweight,2020,japan,bronze
+31,cycling,men's roadrace,2020,japan,gold
+32,cycling,men's roadrace,2020,japan,silver
+33,cycling,men's roadrace,2020,japan,bronze
+13,athletics,decathlon,2020,japan,gold
+12,athletics,decathlon,2020,japan,silver
+14,athletics,decathlon,2020,japan,bronze
+39,fencing,individual epee,2020,japan,gold
+40,fencing,individual epee,2020,japan,silver
+41,fencing,individual epee,2020,japan,bronze
+47,gymnastics,individual all around,2020,japan,gold
+48,gymnastics,individual all around,2020,japan,silver
+49,gymnastics,individual all around,2020,japan,bronze
+56,shooting,10m air rifle,2020,japan,gold
+57,shooting,10m air rifle,2020,japan,silver
+58,shooting,10m air rifle,2020,japan,bronze

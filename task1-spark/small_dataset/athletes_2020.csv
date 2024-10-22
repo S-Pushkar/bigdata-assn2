@@ -1,0 +1,23 @@
+id,name,dob,height(m),weight(kg),sport,country,num_followers,num_articles,personal_best,event,coach_id
+7,mete gazoz,1993-03-09,1.58,60,archery,turkey,1447,15,62,men's individual,c_033
+8,mauro nespoli,1991-04-23,1.74,71,archery,italy,6589,94,58,men's individual,c_034
+2,takaharu furukawa,1988-11-17,1.76,97,archery,japan,77,11,74,men's individual,c_032
+21,stikya krasteva,1995-05-03,1.64,58,boxing,bulgaria,1134,95,58,women's flyweight,c_004
+22,buse naz cakiroglu,1989-07-05,1.71,100,boxing,turkey,3940,7,43,women's flyweight,c_038
+23,huang hsiao-wen,2007-11-14,1.69,66,boxing,chinese taipei,7699,6,39,women's flyweight,c_037
+24,tsukimi namkik,2005-01-02,1.65,87,boxing,japan,2449,10,92,women's flyweight,c_036
+31,richard carapaz,2003-03-13,1.9,77,cycling,ecuador,2740,79,97.6,men's roadrace,c_035
+32,wout van aert,1995-01-18,1.61,56,cycling,belgium,5116,30,61.3,men's roadrace,c_012
+33,tadej pogacar,1999-06-04,1.89,81,cycling,slovenia,9181,61,62.3,men's roadrace,c_009
+999,damian warner,1991-04-04,1.79,86,athletics,canada,3220,68,46,decathlon,c_015
+12,kevin mayer,1990-10-05,1.9,100,athletics,france,3438,61,89,decathlon,c_028
+14,ashley moloney,1994-04-12,1.68,68,athletics,australia,522,49,83,decathlon,c_029
+39,sun yiwen,1994-08-25,1.53,59,fencing,china,521,2,86,individual epee,c_017
+40,ana poopescu,2001-05-14,1.74,50,fencing,romaina,1033,74,47,individual epee,c_018
+41,katrina lehis,2001-09-21,2,62,fencing,estonia,6569,72,70,individual epee,c_019
+47,sunisa lee,2008-09-23,1.71,67,gymnastics,usa,1693,80,94,individual all around,c_021
+48,rebeca andradae,2002-01-20,1.94,93,gymnastics,brazil,8611,81,37,individual all around,c_023
+49,angelina melnikova,2006-01-27,1.79,52,gymnastics,russia,8558,95,23,individual all around,c_022
+56,will shaner,1993-10-16,1.75,66,shooting,usa,2493,18,66,10m air rifle,c_027
+57,sheng lihao,1998-06-18,1.72,95,shooting,china,5104,78,75,10m air rifle,c_024
+58,yang haoran,1995-07-02,1.59,75,shooting,china,9545,58,64,10m air rifle,c_024
