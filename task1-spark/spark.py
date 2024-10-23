@@ -78,7 +78,7 @@ athletes_join_medals = spark.sql('''
        END AS BRONZE
     FROM athletes a
     JOIN medals m ON a.id = m.id AND a.sport = m.sport
-    GROUP BY a.id, a.name, a.sport, m.year, m.medal
+    GROUP BY a.id, a.sport, m.year, m.medal, a.name
     ORDER BY a.name
 ''')
 
@@ -207,3 +207,5 @@ result_task_2 = [row.coach_name for row in top_5_coaches_china.collect()] + [row
 with open(output_file, 'w') as f:
     result = (result_task_1, result_task_2)
     f.write(str(result))
+
+spark.stop()
