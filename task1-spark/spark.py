@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-from pyspark.sql import SparkSession, functions as F
+from pyspark.sql import SparkSession, functions as F, Window
 
 spark = SparkSession.builder.appName("Olympics").getOrCreate()
 
@@ -11,15 +11,15 @@ def convert_to_uppercase(df):
             df = df.withColumn(col_name, F.upper(F.col(col_name)))
     return df
 
-athlete_2012 = spark.read.csv(sys.argv[1], header=True, inferSchema=True)
+athlete_2012 = spark.read.csv(sys.argv[1], header=True, inferSchema=True).withColumn('year', F.lit(2012))
 athlete_2012 = convert_to_uppercase(athlete_2012)
 athlete_2012.createOrReplaceTempView('athlete_2012')
 
-athlete_2016 = spark.read.csv(sys.argv[2], header=True, inferSchema=True)
+athlete_2016 = spark.read.csv(sys.argv[2], header=True, inferSchema=True).withColumn('year', F.lit(2016))
 athlete_2016 = convert_to_uppercase(athlete_2016)
 athlete_2016.createOrReplaceTempView('athlete_2016')
 
-athlete_2020 = spark.read.csv(sys.argv[3], header=True, inferSchema=True)
+athlete_2020 = spark.read.csv(sys.argv[3], header=True, inferSchema=True).withColumn('year', F.lit(2020))
 athlete_2020 = convert_to_uppercase(athlete_2020)
 athlete_2020.createOrReplaceTempView('athlete_2020')
 
@@ -40,18 +40,11 @@ output_file = sys.argv[6]
 
 # Task 1.1
 
-athletes = spark.sql('''
-    SELECT DISTINCT id, name, sport, country, event, coach_id, '2012' AS year FROM athlete_2012
-    UNION
-    (SELECT DISTINCT id, name, sport, country, event, coach_id, '2016' AS year FROM athlete_2016
-    UNION
-    SELECT DISTINCT id, name, sport, country, event, coach_id, '2020' AS year FROM athlete_2020)
-''')
-
+athletes = athlete_2012.union(athlete_2016).union(athlete_2020)
 athletes.createOrReplaceTempView('athletes')
 
 athletes_join_medals = spark.sql('''
-    SELECT a.id AS id, a.name AS name, a.sport AS sport, m.year AS year, m.medal AS medal,
+    SELECT DISTINCT a.id AS id, a.name AS name, a.sport AS sport,
        CASE
            WHEN m.medal = 'GOLD' AND m.year = 2012 THEN 20
            WHEN m.medal = 'SILVER' AND m.year = 2012 THEN 15
@@ -78,11 +71,16 @@ athletes_join_medals = spark.sql('''
        END AS BRONZE
     FROM athletes a
     JOIN medals m ON a.id = m.id AND a.sport = m.sport
-    GROUP BY a.id, a.sport, m.year, m.medal, a.name
-    ORDER BY a.name
 ''')
 
+athletes_join_medals.filter(F.col('name') == 'MICHAEL SPENCER').show()
+
+    # GROUP BY a.id, a.sport, a.name
+    # ORDER BY a.name
+
 athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
+
+athletes_join_medals.show()
 
 athlete_total_scores = spark.sql('''
     SELECT id, name, sport, SUM(score) AS total_score, SUM(GOLD) AS GOLD, SUM(SILVER) AS SILVER, SUM(BRONZE) AS BRONZE
@@ -101,11 +99,15 @@ athlete_rank = spark.sql('''
 
 athlete_rank.createOrReplaceTempView('athlete_rank')
 
+athlete_rank.show()
+
 result_task_1 = spark.sql('''
     SELECT sport, name, total_score, GOLD, SILVER, BRONZE
     FROM athlete_rank
     WHERE rank = 1
 ''')
+
+result_task_1.show()
 
 # Task 1.2
 
