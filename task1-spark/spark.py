@@ -73,14 +73,14 @@ athletes_join_medals = spark.sql('''
     JOIN medals m ON a.id = m.id AND a.sport = m.sport
 ''')
 
-athletes_join_medals.filter(F.col('name') == 'MICHAEL SPENCER').show()
+# athletes_join_medals.filter(F.col('name') == 'MICHAEL SPENCER').show()
 
     # GROUP BY a.id, a.sport, a.name
     # ORDER BY a.name
 
 athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
 
-athletes_join_medals.show()
+# athletes_join_medals.show()
 
 athlete_total_scores = spark.sql('''
     SELECT id, name, sport, SUM(score) AS total_score, SUM(GOLD) AS GOLD, SUM(SILVER) AS SILVER, SUM(BRONZE) AS BRONZE
@@ -99,7 +99,7 @@ athlete_rank = spark.sql('''
 
 athlete_rank.createOrReplaceTempView('athlete_rank')
 
-athlete_rank.show()
+# athlete_rank.show()
 
 result_task_1 = spark.sql('''
     SELECT sport, name, total_score, GOLD, SILVER, BRONZE
@@ -107,7 +107,7 @@ result_task_1 = spark.sql('''
     WHERE rank = 1
 ''')
 
-result_task_1.show()
+# result_task_1.show()
 
 # Task 1.2
 
