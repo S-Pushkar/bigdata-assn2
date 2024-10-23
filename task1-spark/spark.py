@@ -206,6 +206,6 @@ result_task_2 = [row.coach_name for row in top_5_coaches_china.collect()] + [row
 
 with open(output_file, 'w') as f:
     result = (result_task_1, result_task_2)
-    f.write(str(result))
+    f.write(str(result) + "\n")
 
 spark.stop()
