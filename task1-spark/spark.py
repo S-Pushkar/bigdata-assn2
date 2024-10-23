@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-from pyspark.sql import SparkSession, functions as F, Window
+from pyspark.sql import SparkSession, functions as F
 
 spark = SparkSession.builder.appName("Olympics").getOrCreate()
 
@@ -43,71 +43,49 @@ output_file = sys.argv[6]
 athletes = athlete_2012.union(athlete_2016).union(athlete_2020)
 athletes.createOrReplaceTempView('athletes')
 
+athletes_join_medals = athletes.join(medals, (athletes.id == medals.id) & (athletes.sport == medals.sport) & (athletes.event == medals.event) & (athletes.year == medals.year), 'inner').select(athletes.id, athletes.name, athletes.sport, medals.year, medals.medal)
+athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
+
+athletes_join_medals = athletes_join_medals.withColumn('score', F.when((F.col('medal') == 'GOLD') & (F.col('year') == 2012), 20).when((F.col('medal') == 'SILVER') & (F.col('year') == 2012), 15).when((F.col('medal') == 'BRONZE') & (F.col('year') == 2012), 10).when((F.col('medal') == 'GOLD') & (F.col('year') == 2016), 12).when((F.col('medal') == 'SILVER') & (F.col('year') == 2016), 8).when((F.col('medal') == 'BRONZE') & (F.col('year') == 2016), 6).when((F.col('medal') == 'GOLD') & (F.col('year') == 2020), 15).when((F.col('medal') == 'SILVER') & (F.col('year') == 2020), 12).when((F.col('medal') == 'BRONZE') & (F.col('year') == 2020), 7).otherwise(0))
+
+athletes_join_medals = athletes_join_medals.withColumn('GOLD', F.when(F.col('medal') == 'GOLD', 1).otherwise(0))
+
+athletes_join_medals = athletes_join_medals.withColumn('SILVER', F.when(F.col('medal') == 'SILVER', 1).otherwise(0))
+
+athletes_join_medals = athletes_join_medals.withColumn('BRONZE', F.when(F.col('medal') == 'BRONZE', 1).otherwise(0))
+
+athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
+
 athletes_join_medals = spark.sql('''
-    SELECT DISTINCT a.id AS id, a.name AS name, a.sport AS sport,
-       CASE
-           WHEN m.medal = 'GOLD' AND m.year = 2012 THEN 20
-           WHEN m.medal = 'SILVER' AND m.year = 2012 THEN 15
-           WHEN m.medal = 'BRONZE' AND m.year = 2012 THEN 10
-           WHEN m.medal = 'GOLD' AND m.year = 2016 THEN 12
-           WHEN m.medal = 'SILVER' AND m.year = 2016 THEN 8
-           WHEN m.medal = 'BRONZE' AND m.year = 2016 THEN 6
-           WHEN m.medal = 'GOLD' AND m.year = 2020 THEN 15
-           WHEN m.medal = 'SILVER' AND m.year = 2020 THEN 12
-           WHEN m.medal = 'BRONZE' AND m.year = 2020 THEN 7
-           ELSE 0
-       END AS score,
-       CASE
-           WHEN m.medal = 'GOLD' THEN 1
-           ELSE 0
-       END AS GOLD,
-       CASE 
-           WHEN m.medal = 'SILVER' THEN 1
-           ELSE 0
-       END AS SILVER,
-       CASE
-           WHEN m.medal = 'BRONZE' THEN 1
-           ELSE 0
-       END AS BRONZE
-    FROM athletes a
-    JOIN medals m ON a.id = m.id AND a.sport = m.sport
+    SELECT id, name, sport, SUM(score) AS total_score, SUM(GOLD) AS GOLD, SUM(SILVER) AS SILVER, SUM(BRONZE) AS BRONZE
+    FROM athletes_join_medals
+    GROUP BY id, name, sport
+    ORDER BY total_score DESC, GOLD DESC, SILVER DESC, BRONZE DESC, name ASC
 ''')
 
-# athletes_join_medals.filter(F.col('name') == 'MICHAEL SPENCER').show()
+athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
 
-    # GROUP BY a.id, a.sport, a.name
-    # ORDER BY a.name
+athletes_join_medals = spark.sql('''
+    SELECT id, name, sport, total_score, GOLD, SILVER, BRONZE,
+    ROW_NUMBER() OVER (PARTITION BY sport ORDER BY total_score DESC, GOLD DESC, SILVER DESC, BRONZE DESC, name ASC) AS rank
+    FROM athletes_join_medals
+    ORDER BY sport ASC, total_score DESC, GOLD DESC, SILVER DESC, BRONZE DESC, name ASC
+''')
+
+athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
+
+athletes_join_medals = spark.sql('''
+    SELECT id, name, sport, total_score, GOLD, SILVER, BRONZE, rank
+    FROM athletes_join_medals
+    WHERE rank = 1
+    ORDER BY sport ASC, total_score DESC, GOLD DESC, SILVER DESC, BRONZE DESC, name ASC
+''')
 
 athletes_join_medals.createOrReplaceTempView('athletes_join_medals')
 
 # athletes_join_medals.show()
 
-athlete_total_scores = spark.sql('''
-    SELECT id, name, sport, SUM(score) AS total_score, SUM(GOLD) AS GOLD, SUM(SILVER) AS SILVER, SUM(BRONZE) AS BRONZE
-    FROM athletes_join_medals
-    GROUP BY id, name, sport
-    ORDER BY total_score DESC
-''')
-
-athlete_total_scores.createOrReplaceTempView('athlete_total_scores')
-
-athlete_rank = spark.sql('''
-    SELECT sport, name, total_score, GOLD, SILVER, BRONZE,
-    ROW_NUMBER() OVER (PARTITION BY sport ORDER BY total_score DESC, GOLD DESC, SILVER DESC, BRONZE DESC, name ASC) AS rank
-    FROM athlete_total_scores
-''')
-
-athlete_rank.createOrReplaceTempView('athlete_rank')
-
-# athlete_rank.show()
-
-result_task_1 = spark.sql('''
-    SELECT sport, name, total_score, GOLD, SILVER, BRONZE
-    FROM athlete_rank
-    WHERE rank = 1
-''')
-
-# result_task_1.show()
+result_task_1 = athletes_join_medals
 
 # Task 1.2
 
